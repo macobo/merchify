@@ -277,6 +277,13 @@ app.controller('MainController', function($rootScope, $scope){
         }
     ];
 
+    $scope.i = 0;
+    $scope.client = $scope.clients[$scope.i];
+
+    $scope.nextClient = function() {
+      $scope.i = ($scope.i+1) % $scope.clients.length;
+    $scope.client = $scope.clients[$scope.i];
+    };
 
     $scope.bottomReached = function () {
         /* global alert: false; */
