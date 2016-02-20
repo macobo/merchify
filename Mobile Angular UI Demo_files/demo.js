@@ -1,16 +1,16 @@
-// 
-// Here is how to define your module 
+//
+// Here is how to define your module
 // has dependent on mobile-angular-ui
-// 
+//
 var app = angular.module('MobileAngularUiExamples', [
   'ngRoute',
   'mobile-angular-ui',
-  
+
   // touch/drag feature: this is from 'mobile-angular-ui.gestures.js'
   // it is at a very beginning stage, so please be careful if you like to use
-  // in production. This is intended to provide a flexible, integrated and and 
+  // in production. This is intended to provide a flexible, integrated and and
   // easy to use alternative to other 3rd party libs like hammer.js, with the
-  // final pourpose to integrate gestures into default ui interactions like 
+  // final pourpose to integrate gestures into default ui interactions like
   // opening sidebars, turning switches on/off ..
   'mobile-angular-ui.gestures'
 ]);
@@ -19,30 +19,32 @@ app.run(function($transform) {
   window.$transform = $transform;
 });
 
-// 
+//
 // You can configure ngRoute as always, but to take advantage of SharedState location
-// feature (i.e. close sidebar on backbutton) you should setup 'reloadOnSearch: false' 
+// feature (i.e. close sidebar on backbutton) you should setup 'reloadOnSearch: false'
 // in order to avoid unwanted routing.
-// 
+//
 app.config(function($routeProvider) {
   $routeProvider.when('/',              {templateUrl: 'home.html', reloadOnSearch: false});
-  $routeProvider.when('/scroll',        {templateUrl: 'scroll.html', reloadOnSearch: false}); 
-  $routeProvider.when('/toggle',        {templateUrl: 'toggle.html', reloadOnSearch: false}); 
-  $routeProvider.when('/tabs',          {templateUrl: 'tabs.html', reloadOnSearch: false}); 
-  $routeProvider.when('/accordion',     {templateUrl: 'accordion.html', reloadOnSearch: false}); 
-  $routeProvider.when('/overlay',       {templateUrl: 'overlay.html', reloadOnSearch: false}); 
-  $routeProvider.when('/forms',         {templateUrl: 'forms.html', reloadOnSearch: false});
-  $routeProvider.when('/dropdown',      {templateUrl: 'dropdown.html', reloadOnSearch: false});
-  $routeProvider.when('/touch',         {templateUrl: 'touch.html', reloadOnSearch: false});
-  $routeProvider.when('/swipe',         {templateUrl: 'swipe.html', reloadOnSearch: false});
-  $routeProvider.when('/drag',          {templateUrl: 'drag.html', reloadOnSearch: false});
-  $routeProvider.when('/drag2',         {templateUrl: 'drag2.html', reloadOnSearch: false});
-  $routeProvider.when('/carousel',      {templateUrl: 'carousel.html', reloadOnSearch: false});
+  $routeProvider.when('/page2', {templateUrl: 'page2.html'});
+  $routeProvider.when('/page3', {templateUrl: 'page3.html'});
+  // $routeProvider.when('/scroll',        {templateUrl: 'scroll.html', reloadOnSearch: false});
+  // $routeProvider.when('/toggle',        {templateUrl: 'toggle.html', reloadOnSearch: false});
+  // $routeProvider.when('/tabs',          {templateUrl: 'tabs.html', reloadOnSearch: false});
+  // $routeProvider.when('/accordion',     {templateUrl: 'accordion.html', reloadOnSearch: false});
+  // $routeProvider.when('/overlay',       {templateUrl: 'overlay.html', reloadOnSearch: false});
+  // $routeProvider.when('/forms',         {templateUrl: 'forms.html', reloadOnSearch: false});
+  // $routeProvider.when('/dropdown',      {templateUrl: 'dropdown.html', reloadOnSearch: false});
+  // $routeProvider.when('/touch',         {templateUrl: 'touch.html', reloadOnSearch: false});
+  // $routeProvider.when('/swipe',         {templateUrl: 'swipe.html', reloadOnSearch: false});
+  // $routeProvider.when('/drag',          {templateUrl: 'drag.html', reloadOnSearch: false});
+  // $routeProvider.when('/drag2',         {templateUrl: 'drag2.html', reloadOnSearch: false});
+  // $routeProvider.when('/carousel',      {templateUrl: 'carousel.html', reloadOnSearch: false});
 });
 
-// 
+//
 // `$touch example`
-// 
+//
 
 app.directive('toucharea', ['$touch', function($touch){
   // Runs during compile
@@ -57,7 +59,7 @@ app.directive('toucharea', ['$touch', function($touch){
         },
 
         cancel: function(touch) {
-          $scope.touch = touch;  
+          $scope.touch = touch;
           $scope.$apply();
         },
 
@@ -103,9 +105,9 @@ app.directive('dragToDismiss', function($drag, $parse, $timeout){
           end: function(drag) {
             if (dismiss) {
               elem.addClass('dismitted');
-              $timeout(function() { 
+              $timeout(function() {
                 scope.$apply(function() {
-                  dismissFn(scope);  
+                  dismissFn(scope);
                 });
               }, 300);
             } else {
@@ -119,7 +121,7 @@ app.directive('dragToDismiss', function($drag, $parse, $timeout){
 });
 
 //
-// Another `$drag` usage example: this is how you could create 
+// Another `$drag` usage example: this is how you could create
 // a touch enabled "deck of cards" carousel. See `carousel.html` for markup.
 //
 app.directive('carousel', function(){
@@ -159,7 +161,7 @@ app.directive('carouselItem', function($drag) {
     link: function(scope, elem, attrs, carousel) {
       scope.carousel = carousel;
       var id = carousel.addItem();
-      
+
       var zIndex = function(){
         var res = 0;
         if (id === carousel.activeItem){
@@ -177,34 +179,34 @@ app.directive('carouselItem', function($drag) {
       }, function(){
         elem[0].style.zIndex = zIndex();
       });
-      
+
       $drag.bind(elem, {
         //
         // This is an example of custom transform function
         //
         transform: function(element, transform, touch) {
-          // 
+          //
           // use translate both as basis for the new transform:
-          // 
+          //
           var t = $drag.TRANSLATE_BOTH(element, transform, touch);
-          
+
           //
           // Add rotation:
           //
-          var Dx    = touch.distanceX, 
-              t0    = touch.startTransform, 
+          var Dx    = touch.distanceX,
+              t0    = touch.startTransform,
               sign  = Dx < 0 ? -1 : 1,
               angle = sign * Math.min( ( Math.abs(Dx) / 700 ) * 30 , 30 );
-          
+
           t.rotateZ = angle + (Math.round(t0.rotateZ));
-          
+
           return t;
         },
         move: function(drag){
           if(Math.abs(drag.distanceX) >= drag.rect.width / 4) {
-            elem.addClass('dismiss');  
+            elem.addClass('dismiss');
           } else {
-            elem.removeClass('dismiss');  
+            elem.removeClass('dismiss');
           }
         },
         cancel: function(){
@@ -227,10 +229,10 @@ app.directive('carouselItem', function($drag) {
 app.directive('dragMe', ['$drag', function($drag){
   return {
     controller: function($scope, $element) {
-      $drag.bind($element, 
+      $drag.bind($element,
         {
           //
-          // Here you can see how to limit movement 
+          // Here you can see how to limit movement
           // to an element
           //
           transform: $drag.TRANSLATE_INSIDE($element.parent()),
@@ -248,7 +250,7 @@ app.directive('dragMe', ['$drag', function($drag){
 }]);
 
 //
-// For this trivial demo we have just a unique MainController 
+// For this trivial demo we have just a unique MainController
 // for everything
 //
 app.controller('MainController', function($rootScope, $scope){
@@ -259,7 +261,7 @@ app.controller('MainController', function($rootScope, $scope){
 
   // User agent displayed in home page
   $scope.userAgent = navigator.userAgent;
-  
+
   // Needed for the loading screen
   $rootScope.$on('$routeChangeStart', function(){
     $rootScope.loading = true;
@@ -272,9 +274,9 @@ app.controller('MainController', function($rootScope, $scope){
   // Fake text i used here and there.
   $scope.lorem = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel explicabo, aliquid eaque soluta nihil eligendi adipisci error, illum corrupti nam fuga omnis quod quaerat mollitia expedita impedit dolores ipsam. Obcaecati.';
 
-  // 
+  //
   // 'Scroll' screen
-  // 
+  //
   var scrollItems = [];
 
   for (var i=1; i<=100; i++) {
@@ -288,9 +290,9 @@ app.controller('MainController', function($rootScope, $scope){
     alert('Congrats you scrolled to the end of the list!');
   };
 
-  // 
+  //
   // Right Sidebar
-  // 
+  //
   $scope.chatUsers = [
     { name: 'Carlos  Flowers', online: true },
     { name: 'Byron Taylor', online: true },
@@ -321,19 +323,19 @@ app.controller('MainController', function($rootScope, $scope){
 
   //
   // 'Forms' screen
-  //  
+  //
   $scope.rememberMe = true;
   $scope.email = 'me@example.com';
-  
+
   $scope.login = function() {
     alert('You submitted the login form');
   };
 
-  // 
+  //
   // 'Drag' screen
-  // 
+  //
   $scope.notices = [];
-  
+
   for (var j = 0; j < 10; j++) {
     $scope.notices.push({icon: 'envelope', message: 'Notice ' + (j + 1) });
   }
