@@ -298,10 +298,10 @@ app.controller('MainController', function($rootScope, $scope){
       $scope.i = i;
       $scope.client = $scope.clients[i];
 
-      for (var k = 0; k < markers.length; k++) {
-        markers[k].setMap(null);
-      }
-      markers = renderMarkers(map, $scope.clients, i);
+      // for (var k = 0; k < markers.length; k++) {
+      //   markers[k].setMap(null);
+      // }
+      // markers = renderMarkers(map, $scope.clients, i);
     }
 
     $scope.bottomReached = function () {
