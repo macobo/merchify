@@ -264,7 +264,7 @@ app.controller('MainController', function($rootScope, $scope){
         y: 55.33,
         distance: 55,
         name: "minunimi",
-        logo: "minulogo",
+        logo: "img/merch1.png",
         closingAt: "foobar"
     },
     {
