@@ -348,6 +348,7 @@ app.controller('MainController', function($rootScope, $scope){
     };
 
     function initMap() {
+
         var bounds = new google.maps.LatLngBounds();
         var infowindow = new google.maps.InfoWindow();
         map = new google.maps.Map(document.getElementById('map'), {
@@ -375,6 +376,7 @@ app.controller('MainController', function($rootScope, $scope){
         var listener = google.maps.event.addListener(map, "idle", function () {
             google.maps.event.removeListener(listener);
         });
+        var GeoMarker = new GeolocationMarker(map);
     }
 
     setTimeout(initMap, 500);
