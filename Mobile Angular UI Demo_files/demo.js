@@ -263,7 +263,7 @@ app.controller('MainController', function($rootScope, $scope){
         x: 55.33,
         y: 55.33,
         distance: 55,
-        name: "minunimi",
+        name: "Pulcinella",
         logo: "img/merch1.png",
         closingAt: "foobar"
     },
