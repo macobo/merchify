@@ -24,7 +24,9 @@
 }
 #number-input input {
   height: 50px;
-  width: 25em;
+    width: 12.5em;
+    font-size: 2em;
+    text-align: center;
 }
 
 #next-thing {
