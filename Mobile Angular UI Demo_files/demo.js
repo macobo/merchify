@@ -260,27 +260,27 @@ app.controller('MainController', function($rootScope, $scope){
   };
     $scope.clients = [
         {
-            lat: 59.4211961,
-            lng: 24.7461416,
+            lat: 59.4223848,
+            lng: 24.747689,
             distance: 55,
             name: "Pulcinella",
             logo: "img/merch1.png",
             closingAt: "foobar"
         },
         {
-            lat: 59.4223848,
-            lng: 24.747689,
+            lat: 59.4211961,
+            lng: 24.7461416,
             distance: 55,
-            name: "teine",
-            logo: "minulogo",
+            name: "Sushicat",
+            logo: "img/merch2.png",
             closingAt: "foobar"
         },
         {
             lat: 59.4250154,
             lng: 24.7539764,
             distance: 55,
-            name: "teine",
-            logo: "minulogo",
+            name: "Sushicat",
+            logo: "img/merch3.png",
             closingAt: "foobar"
         }
     ];
@@ -289,9 +289,20 @@ app.controller('MainController', function($rootScope, $scope){
     $scope.client = $scope.clients[$scope.i];
 
     $scope.nextClient = function() {
-      $scope.i = ($scope.i+1) % $scope.clients.length;
-      $scope.client = $scope.clients[$scope.i];
+      var i = ($scope.i+1) % $scope.clients.length;
+      setActive(i);
     };
+
+
+    setActive = function(i) {
+      $scope.i = i;
+      $scope.client = $scope.clients[i];
+
+      for (var k = 0; k < markers.length; k++) {
+        markers[k].setMap(null);
+      }
+      markers = renderMarkers(map, $scope.clients, i);
+    }
 
     $scope.bottomReached = function () {
         /* global alert: false; */
@@ -353,8 +364,28 @@ app.controller('MainController', function($rootScope, $scope){
         if (index > -1) {
             $scope.notices.splice(index, 1);
         }
+        markers = renderMarkers(map, $scope.clients, index);
     };
 
+
+    function renderMarkers(map, clients, active) {
+      var markers = []
+      for (var i = 0; i < clients.length; i++) {
+        var settings = {
+            position: $scope.clients[i],
+            map: map,
+            // icon: icon
+        }
+        if (active == i) {
+          // settings.icon = licon;
+        }
+        var marker = new google.maps.Marker(settings);
+        markers.push(marker);
+      }
+      return markers;
+    }
+
+    var markers = []
     function initMap() {
 
         var bounds = new google.maps.LatLngBounds();
@@ -471,13 +502,15 @@ app.controller('MainController', function($rootScope, $scope){
         //   position: {lat: -34.397, lng: 150.644}
         // });
 
-        for (i = 0; i < $scope.clients.length; i++) {
-            var marker = new google.maps.Marker({
-                position: $scope.clients[i],
-                map: map
-            });
+        markers = renderMarkers(map, $scope.clients, $scope.i);
 
-            bounds.extend(marker.position);
+        for (i = 0; i < $scope.clients.length; i++) {
+            // var marker = new google.maps.Marker({
+            //     position: $scope.clients[i],
+            //     map: map
+            // });
+
+            bounds.extend(markers[i].position);
 
             // google.maps.event.addListener(marker, 'click', (function (marker, i) {
             //     return function () {
@@ -486,6 +519,7 @@ app.controller('MainController', function($rootScope, $scope){
             //         infowindow.open(map, marker);
             //     }
             // })(marker, i));
+            // markers.push(marker);
         }
 
         var GeoMarker = new GeolocationMarker(map);
