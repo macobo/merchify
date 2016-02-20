@@ -1,0 +1,40 @@
+{
+  "generator-angular-mobile": {
+    "insertRoutes": true,
+    "registerRoutesFile": "server/routes.js",
+    "routesNeedle": "// Insert routes below",
+    "routesBase": "/api/",
+    "pluralizeRoutes": true,
+    "insertSockets": true,
+    "registerSocketsFile": "server/config/socketio.js",
+    "socketsNeedle": "// Insert sockets below",
+    "filters": {
+      "ngroute": true
+    }
+  },
+  "generator-ng-component": {
+    "routeDirectory": "www/app/",
+    "directiveDirectory": "www/app/",
+    "filterDirectory": "www/app/",
+    "serviceDirectory": "www/app/",
+    "basePath": "www",
+    "moduleName": "",
+    "filters": [
+      "ngroute"
+    ],
+    "extensions": [
+      "css",
+      "js",
+      "html"
+    ],
+    "directiveSimpleTemplates": "",
+    "directiveComplexTemplates": "",
+    "filterTemplates": "",
+    "serviceTemplates": "",
+    "factoryTemplates": "",
+    "controllerTemplates": "",
+    "decoratorTemplates": "",
+    "providerTemplates": "",
+    "routeTemplates": ""
+  }
+}
