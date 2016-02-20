@@ -260,16 +260,24 @@ app.controller('MainController', function($rootScope, $scope){
   };
     $scope.clients = [
         {
-            lat: 59.4245585,
-            lng: 24.7468455,
+            lat: 59.4211961,
+            lng: 24.7461416,
             distance: 55,
             name: "Pulcinella",
             logo: "img/merch1.png",
             closingAt: "foobar"
         },
         {
-            lat: 59.4341138,
-            lng: 24.7507072,
+            lat: 59.4223848,
+            lng: 24.747689,
+            distance: 55,
+            name: "teine",
+            logo: "minulogo",
+            closingAt: "foobar"
+        },
+        {
+            lat: 59.4250154,
+            lng: 24.7539764,
             distance: 55,
             name: "teine",
             logo: "minulogo",
@@ -458,10 +466,10 @@ app.controller('MainController', function($rootScope, $scope){
     }
 ]
         });
-        var userMarker = new google.maps.Marker({
-          map: map,
-          position: {lat: -34.397, lng: 150.644}
-        });
+        // var userMarker = new google.maps.Marker({
+        //   map: map,
+        //   position: {lat: -34.397, lng: 150.644}
+        // });
 
         for (i = 0; i < $scope.clients.length; i++) {
             var marker = new google.maps.Marker({
@@ -471,22 +479,29 @@ app.controller('MainController', function($rootScope, $scope){
 
             bounds.extend(marker.position);
 
-            google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                return function () {
-                    infowindow.setContent(
-                        '<img style="width: 100%" src="' + $scope.clients[i].logo + '"/>');
-                    infowindow.open(map, marker);
-                }
-            })(marker, i));
+            // google.maps.event.addListener(marker, 'click', (function (marker, i) {
+            //     return function () {
+            //         infowindow.setContent(
+            //             '<img style="width: 100%" src="' + $scope.clients[i].logo + '"/>');
+            //         infowindow.open(map, marker);
+            //     }
+            // })(marker, i));
         }
 
-        map.fitBounds(bounds);
-
-        var listener = google.maps.event.addListener(map, "idle", function () {
-            google.maps.event.removeListener(listener);
-        });
         var GeoMarker = new GeolocationMarker(map);
+        console.log(GeoMarker)
+        google.maps.event.addListener(GeoMarker, 'position_changed', function() {
+          console.log('change');
+          bounds.extend(GeoMarker.position);
+          map.setCenter(GeoMarker.position);
+          map.setZoom(16);
+          // map.fitBounds(bounds);
+        });
+
+        // var listener = google.maps.event.addListener(map, "idle", function () {
+        //     google.maps.event.removeListener(listener);
+        // });
     }
 
-    setTimeout(initMap, 500);
+    setTimeout(initMap, 200);
 });
