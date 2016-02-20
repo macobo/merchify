@@ -258,6 +258,32 @@ app.controller('MainController', function($rootScope, $scope){
   $scope.swiped = function(direction) {
     alert('Swiped ' + direction);
   };
+  $scope.clients = [
+    {
+        x: 55.33,
+        y: 55.33,
+        distance: 55,
+        name: "minunimi",
+        logo: "minulogo",
+        closingAt: "foobar"
+    },
+    {
+        x: 55.33,
+        y: 55.33,
+        distance: 55,
+        name: "teine",
+        logo: "minulogo",
+        closingAt: "foobar"
+    }
+  ];
+
+  $scope.i = 0;
+  $scope.client = $scope.clients[$scope.i];
+
+  $scope.nextClient = function() {
+    $scope.i = ($scope.i+1) % $scope.clients.length;
+  $scope.client = $scope.clients[$scope.i];
+  };
 
   // User agent displayed in home page
   $scope.userAgent = navigator.userAgent;
