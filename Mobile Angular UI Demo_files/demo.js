@@ -352,8 +352,117 @@ app.controller('MainController', function($rootScope, $scope){
         var bounds = new google.maps.LatLngBounds();
         var infowindow = new google.maps.InfoWindow();
         map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: -34.397, lng: 150.644}
+            center: {lat: -34.397, lng: 150.644},
+            styles: [
+    {
+        "featureType": "landscape",
+        "stylers": [
+            {
+                "hue": "#F1FF00"
+            },
+            {
+                "saturation": -27.4
+            },
+            {
+                "lightness": 9.4
+            },
+            {
+                "gamma": 1
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "stylers": [
+            {
+                "hue": "#0099FF"
+            },
+            {
+                "saturation": -20
+            },
+            {
+                "lightness": 36.4
+            },
+            {
+                "gamma": 1
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "stylers": [
+            {
+                "hue": "#00FF4F"
+            },
+            {
+                "saturation": 0
+            },
+            {
+                "lightness": 0
+            },
+            {
+                "gamma": 1
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "stylers": [
+            {
+                "hue": "#FFB300"
+            },
+            {
+                "saturation": -38
+            },
+            {
+                "lightness": 11.2
+            },
+            {
+                "gamma": 1
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "stylers": [
+            {
+                "hue": "#00B6FF"
+            },
+            {
+                "saturation": 4.2
+            },
+            {
+                "lightness": -63.4
+            },
+            {
+                "gamma": 1
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "stylers": [
+            {
+                "hue": "#9FFF00"
+            },
+            {
+                "saturation": 0
+            },
+            {
+                "lightness": 0
+            },
+            {
+                "gamma": 1
+            }
+        ]
+    }
+]
         });
+        var userMarker = new google.maps.Marker({
+          map: map,
+          position: {lat: -34.397, lng: 150.644}
+        });
+
         for (i = 0; i < $scope.clients.length; i++) {
             var marker = new google.maps.Marker({
                 position: $scope.clients[i],
@@ -364,8 +473,8 @@ app.controller('MainController', function($rootScope, $scope){
 
             google.maps.event.addListener(marker, 'click', (function (marker, i) {
                 return function () {
-                    infowindow.setContent($scope.clients[i].name + "<br>" +
-                        '<img src="' + $scope.clients[i].logo + '"/>');
+                    infowindow.setContent(
+                        '<img style="width: 100%" src="' + $scope.clients[i].logo + '"/>');
                     infowindow.open(map, marker);
                 }
             })(marker, i));
