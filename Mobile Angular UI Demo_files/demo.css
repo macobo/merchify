@@ -16,6 +16,24 @@
   padding: 3em;
   text-align: center;
 }
+
+#number-input {
+  position: absolute;
+  top: 488px;
+  left: 120px;
+}
+#number-input input {
+  height: 50px;
+  width: 25em;
+}
+
+#next-thing {
+  position: absolute;
+  top: 580px;
+  left: 200px;
+  width: 200px;
+  height: 70px;
+}
 .description-text {
   /*padding: 1em;*/
   font-size: 30px;

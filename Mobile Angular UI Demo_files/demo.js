@@ -282,7 +282,7 @@ app.controller('MainController', function($rootScope, $scope){
 
     $scope.nextClient = function() {
       $scope.i = ($scope.i+1) % $scope.clients.length;
-    $scope.client = $scope.clients[$scope.i];
+      $scope.client = $scope.clients[$scope.i];
     };
 
     $scope.bottomReached = function () {
