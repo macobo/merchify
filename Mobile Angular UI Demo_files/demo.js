@@ -253,19 +253,18 @@ app.directive('dragMe', ['$drag', function ($drag) {
 // For this trivial demo we have just a unique MainController
 // for everything
 //
-app.controller('MainController', function ($rootScope, $scope) {
+app.controller('MainController', function($rootScope, $scope){
 
-
-    $scope.swiped = function (direction) {
-        alert('Swiped ' + direction);
-    };
+  $scope.swiped = function(direction) {
+    alert('Swiped ' + direction);
+  };
     $scope.clients = [
         {
             lat: 59.4245585,
             lng: 24.7468455,
             distance: 55,
-            name: "minunimi",
-            logo: "minulogo",
+            name: "Pulcinella",
+            logo: "img/merch1.png",
             closingAt: "foobar"
         },
         {
@@ -278,39 +277,6 @@ app.controller('MainController', function ($rootScope, $scope) {
         }
     ];
 
-    $scope.i = 0;
-    $scope.client = $scope.clients[$scope.i];
-
-    $scope.nextClient = function () {
-        $scope.i = ($scope.i + 1) % $scope.clients.length;
-        $scope.client = $scope.clients[$scope.i];
-    };
-
-    // User agent displayed in home page
-    $scope.userAgent = navigator.userAgent;
-
-    // Needed for the loading screen
-    $rootScope.$on('$routeChangeStart', function () {
-        $rootScope.loading = true;
-    });
-
-    $rootScope.$on('$routeChangeSuccess', function () {
-        $rootScope.loading = false;
-    });
-
-    // Fake text i used here and there.
-    $scope.lorem = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel explicabo, aliquid eaque soluta nihil eligendi adipisci error, illum corrupti nam fuga omnis quod quaerat mollitia expedita impedit dolores ipsam. Obcaecati.';
-
-    //
-    // 'Scroll' screen
-    //
-    var scrollItems = [];
-
-    for (var i = 1; i <= 100; i++) {
-        scrollItems.push('Item ' + i);
-    }
-
-    $scope.scrollItems = scrollItems;
 
     $scope.bottomReached = function () {
         /* global alert: false; */
