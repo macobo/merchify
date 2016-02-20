@@ -343,7 +343,9 @@ app.controller('MainController', function($rootScope, $scope){
     function initMap() {
         var bounds = new google.maps.LatLngBounds();
         var infowindow = new google.maps.InfoWindow();
-
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: -34.397, lng: 150.644}
+        });
         for (i = 0; i < $scope.clients.length; i++) {
             var marker = new google.maps.Marker({
                 position: $scope.clients[i],
@@ -354,18 +356,16 @@ app.controller('MainController', function($rootScope, $scope){
 
             google.maps.event.addListener(marker, 'click', (function (marker, i) {
                 return function () {
-                    infowindow.setContent($scope.clients[i].name);
+                    infowindow.setContent($scope.clients[i].name + "<br>" +
+                        '<img src="' + $scope.clients[i].logo + '"/>');
                     infowindow.open(map, marker);
                 }
             })(marker, i));
         }
 
-//now fit the map to the newly inclusive bounds
         map.fitBounds(bounds);
 
-//(optional) restore the zoom level after the map is done scaling
         var listener = google.maps.event.addListener(map, "idle", function () {
-            map.setZoom(3);
             google.maps.event.removeListener(listener);
         });
     }
