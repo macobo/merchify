@@ -264,7 +264,7 @@ app.controller('MainController', function($rootScope, $scope){
             lng: 24.747689,
             distance: 55,
             name: "Pulcinella",
-            logo: "img/merch1.png",
+            logo: "img/Group.png",
             closingAt: "foobar"
         },
         {
